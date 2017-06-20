@@ -1,0 +1,33 @@
+<nav class="nav">
+<h1>Menu</h1>
+{{#if flash}}
+<p>Message: {{flash.message}}</p>
+{{/if}}
+  {{#unless login}}
+    <ul class="navUL">
+    <li class="liNav"><a href="../">Start page</a></li>
+    <li class="liNav"><a href="../login">Login github</a></li>
+    </ul>
+  {{/unless}}
+  {{#if login}}
+    <p>Logged in as {{loginUser}}</p>
+    <ul class="navUL">
+    <li class="liNav"><a>
+    <form method="post" action="../logout" class="inl">
+      <input type="hidden" name="" value="">
+      <button type="submit" name="" value="" class="link-btn">Logout
+      </button>
+    </form></a></li>
+    <li class="liNav"><a href="../">Start page</a></li>
+    <li class="liNav"><a href="../slack">Send slack invite</a></li>
+    <li class="liNav"><a href="../slack/addSlackName">Enter Slackname for notifications</a></li>
+    <li  class="liNav"><a href="../github/orgs">Orgs</a></li>
+    <li  class="liNav"><a href="../github/pickorg">Pick org to view</a></li>
+    <li  class="liNav"><a href="../github/pickorghooks">Pick org to set organisation webhook/subscribe</a></li>
+    <li  class="liNav"><a href="../github/unsubscribe">Unsubscribe organisation webhook</a></li>
+    <li  class="liNav"><a href="../webhooksettings">Change webhook settings</a></li>
+    </ul>
+
+  {{/if}}
+
+</nav>

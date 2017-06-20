@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>1DV612 Examination</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body class="theme">
+  {{>nav}}
+  {{{ body }}}
+  <script src='/socket.io/socket.io.js'></script>
+  <script>
+  // Auto discovery of the websocket server
+  var socket = io();
+
+  socket.on('repomessage', function(data)
+  {
+    addMessage("New repo notification! Action: "+data.action+', Title: '+data.title+ ', by User: '+data.user);
+  });
+
+  socket.on('issuemessage', function(data)
+  {
+    addMessage("New issue notification! Action: "+data.action+' in Repository: '+data.repository+', Title: '+data.title+ ' by User: '+data.user);
+  });
+
+  socket.on('releasemessage', function(data)
+  {
+    addMessage("New release notification! Action: "+data.action+', Title: '+data.title+ ', Repository: '+data.repo+' by User: '+data.user);
+  });
+
+  socket.on('pushmessage', function(data)
+  {
+    addMessage("New push notification! Commit message: "+data.message+', Title: '+data.title+ ', by User: '+data.user);
+  });
+  socket.on('reporemove', function(data)
+  {
+    removeIssueItem(data.id);
+  });
+
+  socket.on('repoadd', function(data)
+  {
+
+    addRepoItem("Title: "+data.title+ "<br>" +"<span class='"+"owner"+"'"+">Owner: "+data.owner+"</span><br>"+"<span class='"+"desc"+"'"+">Description: "+data.desc+"</span>"+"<br>" + "<a href='"+data.link+"'"+">"+data.link+"</a><br>"+
+     "<div id='"+"fork"+data.id+"'"+">Forks: "+data.forks+"</div>"+"<div id='"+data.id+"'"+">Issues: "+data.issues+"</div>Created at: "+data.dateCreated+"<br>"+
+    "Updated at: "+data.dateUpdated+"<br><span>New issues:<div id='"+"status"+data.id+"'"+" class='"+"commentstyle"+"'"+">1</div></span><span id='"+"comment"+data.id+"'"+" class='"+"span"+"'"+"></span>", data.id);
+  });
+  socket.on('issueadd', function(data)
+  {
+
+    if(data.action === 'opened')
+    {
+      console.log("count opened "+data.openIssuesCount);
+      handleIssueNotes("", data.id, data.openIssuesCount, data.action);
+    }
+
+  });
+
+  function addMessage(message, data) {
+    var text = document.createTextNode(message),
+    el = document.createElement('li'),
+    messages = document.getElementById('messages');
+    el.appendChild(text);
+    messages.appendChild(el);
+  }
+  function removeIssueItem(id)
+  {
+    var li = document.getElementById("li"+id);
+    li.parentNode.removeChild(li);
+  }
+  function addRepoItem(message, id) {
+
+    var text = document.createElement('li');
+    text.setAttribute("id", "li"+id);
+
+    var repos = document.getElementById('cont');
+
+    text.setAttribute("class","cont");
+    text.innerHTML = message;
+    repos.appendChild(text);
+
+  }
+  function handleIssueNotes(message, id, commentCount, action) {
+        console.log(" handle id "+id);
+      if (action === 'opened')
+      {
+        var issue = document.getElementById(id);
+        var correctCount = commentCount;
+        issue.innerHTML = "Issues: "+correctCount;
+        handleOutputIssues("status","comment", id,message);
+      }
+
+
+  }
+
+  function handleOutputIssues(status,comment, id,message)
+  {
+    document.getElementById(status+id).style.visibility='visible';
+
+    if(document.getElementById(comment+id).innerHTML === 'true')
+    {
+      var filtered = document.getElementById(status+id).innerHTML.replace(/\D/g, '');
+      document.getElementById(status+id).innerHTML = message+(parseInt(filtered)+1)
+    }
+    else{
+      document.getElementById(comment+id).innerHTML = 'true';
+    }
+  }
+  </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<h2>Organisation</h2>
+<span class="left">
+<h3 class="headerlist">Repos</h3>
+<ul  class="list">
+  {{#each repos}}
+    <li class="cont" id="li{{id}}" >Title: {{ name }}<br>
+     <span class="owner">Owner: {{owner}}<span><br>
+     <span class="desc">Description: {{desc}}</span><br>
+     <a href="{{link}}">{{link}}</a><br>
+     <div id="fork{{id}}">Forks: {{forks}}</div>
+     <div id="{{id}}">Issues: {{openIssues}}</div>
+     Created at: {{dateCreated}}<br>
+     Updated at: {{dateUpdated}}<br>
+     <span>New issues:<div id="status{{id}}" class="commentstyle">1</div></span>
+    <span id='comment{{id}}' class="span"></span>
+   </li>
+  {{/each}}
+</ul>
+<ul id="cont" class="list"></ul>
+</span>
+<h3 class="headernotes">Notifications</h3><br>
+<ul id="messages" class="notes"></ul><br>

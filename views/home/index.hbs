@@ -1,0 +1,11 @@
+<h3>Startpage</h3>
+<h4>Missed events</h4>
+{{#if login}}
+<form class="" action="../" method="post">
+{{#each events}}
+<p>{{message}}</p>
+<p>{{date}}</p>
+{{/each}}
+<button>Remove temp data</button>
+</form>
+{{/if}}

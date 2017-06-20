@@ -1,0 +1,13 @@
+<h2>Choose org to set webhook</h2>
+<form class="" action="../github/hooks" method="post">
+<select id="org" name="org">
+  {{#each orgs}}
+    <option value="{{this}}">{{this}}</option>
+
+  {{/each}}
+</select>
+{{#each events}}
+<input type="checkbox" name="events" value="{{this}}">{{this}}
+{{/each}}
+<button>Choose</button>
+</form>

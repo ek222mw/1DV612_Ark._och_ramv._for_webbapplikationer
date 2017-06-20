@@ -1,0 +1,12 @@
+{{#if error}}
+    <p>
+        {{error}}
+    </p>
+{{/if}}
+
+<h3>Add slack username</h3>
+<div>Don't forget to accept invite from NotesGithub team first</div>
+<form class="" action="../slack/addSlackName" method="post">
+  <input type="text" name="username" value="" placeholder="Enter slack username">
+  <button>Add slackname</button>
+</form>

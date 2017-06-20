@@ -1,0 +1,51 @@
+
+<h1>Webhook settings orgs</h1><br>
+{{#each settings}}
+<p>{{org}}</p><br>
+<div>Webhook events</div>
+<form class="" action="../webhooksettings" method="post">
+<input type="checkbox" name="events" value="repository">repository
+<input type="checkbox" name="events" value="issues">issues
+<input type="checkbox" name="events" value="push">push
+<input type="checkbox" name="events" value="release">release
+<input type="hidden" name="org" value="{{org}}"><br>
+<button>Change events</button>
+</form><br>
+{{#if github}}
+<form class="" action="../webhooksettings" method="post">
+<div>Github</div>
+<input type="hidden" name="github" value="{{org}}">
+<label class="radio-inline"><input type="radio" name="optradio" value="true" checked="checked">On</label>
+<label class="radio-inline"><input type="radio" name="optradio" value="false">Off</label>
+<button>Send</button>
+</form>
+{{/if}}
+{{#unless github}}
+<form class="" action="../webhooksettings" method="post">
+<div>Github</div>
+<input type="hidden" name="github" value="{{org}}">
+<label class="radio-inline"><input type="radio" name="optradio" value="true" >On</label>
+<label class="radio-inline"><input type="radio" name="optradio" value="false" checked="checked">Off</label>
+<button>Send</button>
+</form>
+{{/unless}}
+{{#if slack}}
+<div>Slack</div>
+<form class="" action="../webhooksettings" method="post">
+<input type="hidden" name="slack" value="{{org}}">
+<label class="radio-inline"><input type="radio" name="optradio" value="true" checked="checked">On</label>
+<label class="radio-inline"><input type="radio" name="optradio" value="false">Off</label>
+<button>Send</button>
+</form>
+{{/if}}
+{{#unless slack}}
+<div>Slack</div>
+<form class="" action="../webhooksettings" method="post">
+<input type="hidden" name="slack" value="{{org}}">
+<label class="radio-inline"><input type="radio" name="optradio" value="true" >On</label>
+<label class="radio-inline"><input type="radio" name="optradio" value="false" checked="checked">Off</label>
+<button>Send</button>
+</form>
+{{/unless}}
+
+{{/each}}
